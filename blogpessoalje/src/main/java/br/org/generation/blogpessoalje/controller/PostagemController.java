@@ -23,18 +23,7 @@ import br.org.generation.blogpessoalje.repository.PostagemRepository;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostagemController {
 	
-	//metodo de conexão com a class PostagemRepository
-	@Autowired
-	private PostagemRepository postagemRepository;
 	
-	
-	//buscando e exibindo os valores que foram salvos no banco
-	@GetMapping
-	public ResponseEntity<List<Postagem>> getAll (){
-		
-		return ResponseEntity.ok(postagemRepository.findAll()); 
-		
-	}
 	
 	//lista postagem por id - método 1 - if/else	
 	/*
@@ -72,6 +61,20 @@ public class PostagemController {
 	}
 	*/
 	
+	
+	//metodo de conexão com a class PostagemRepository
+		@Autowired
+		private PostagemRepository postagemRepository;
+		
+		
+		//buscando e exibindo os valores que foram salvos no banco
+		@GetMapping
+		public ResponseEntity<List<Postagem>> getAll (){
+			
+			return ResponseEntity.ok(postagemRepository.findAll()); 
+			
+		}
+		
 	//lista postagem por id - método 3- lambda
 	@GetMapping("/{id}")
 	public ResponseEntity<Postagem> getById(@PathVariable long id){
