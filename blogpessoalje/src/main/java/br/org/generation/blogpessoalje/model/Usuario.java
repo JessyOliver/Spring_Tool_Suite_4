@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +30,7 @@ public class Usuario {
 	
 	@NotNull(message = "O campo e-mail é obrigatório.")
 	@Size(min = 10, max = 100, message = "O campo e-mail deve conter no minimo 10 e no maximo 100 caracteres.")
+	@Email
 	private String email;
 	
 	@NotNull(message = "O campo senha é obrigatório!")

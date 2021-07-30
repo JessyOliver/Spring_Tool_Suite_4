@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.org.generation.blogpessoalje.model.Postagem;
 import br.org.generation.blogpessoalje.repository.PostagemRepository;
 
 @RestController
-@RequestMapping("/postagens")
+@RequestMapping("/postagens")//@RequestMapping(value="/postagens" , method = RequestMethod.GET)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostagemController {
 	
@@ -66,6 +67,7 @@ public class PostagemController {
 		@Autowired
 		private PostagemRepository postagemRepository;
 		
+				
 		
 		//buscando e exibindo os valores que foram salvos no banco
 		@GetMapping
