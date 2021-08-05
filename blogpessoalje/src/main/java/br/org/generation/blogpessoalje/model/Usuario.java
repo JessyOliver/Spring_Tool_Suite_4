@@ -1,8 +1,10 @@
 package br.org.generation.blogpessoalje.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -25,23 +28,32 @@ public class Usuario {
 	private long id;
 	
 	@NotNull(message = "Campo nome obrigatório!")
-	@Size(min = 10, max = 255, message = "O campo nome deve conter no minimo 10 e no maximo 255 caracteres.")
+	@Size(min = 2, max = 255, message = "O campo nome deve conter no minimo 10 e no maximo 255 caracteres.")
 	private String nome;
 	
 	@NotNull(message = "O campo e-mail é obrigatório.")
-	@Size(min = 10, max = 100, message = "O campo e-mail deve conter no minimo 10 e no maximo 100 caracteres.")
+	@Size( min = 2, max = 100, message = "O campo e-mail deve conter no minimo 10 e no maximo 100 caracteres.")
 	@Email
-	private String email;
+	private String usuario;//no lugar de email
 	
 	@NotNull(message = "O campo senha é obrigatório!")
-	@Size(min = 5, max = 255, message = "O campo senha deve conter no minimo 6 e no maximo 20 caracteres.")
+	@Size(min = 5, message = "O campo senha deve conter no minimo 5")
 	private String senha;
 	
-	// relacionamento com a tabela postagem
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("usuario")
-	private List<Postagem> postagem;
+	/**
+	 * Novo Atributo - Data de Nascimento
+	 * Não esquecer de Gerar os métodos Get e Set
+	 */
 
+	@Column(name = "dt_nascimento")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataNascimento;
+	
+	
+	// relacionamento com a tabela postagem
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)//só irá afetar a postagem caso de remover o usuario
+	@JsonIgnoreProperties({"usuario","tema"})
+	private List<Postagem> postagem;
 	
 	//get e set
 	public long getId() {
@@ -60,12 +72,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {
@@ -83,8 +95,15 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
-	
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
 	
 	
 	//fim tudo
