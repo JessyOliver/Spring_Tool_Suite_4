@@ -23,17 +23,6 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-//	public Usuario cadastrarsUsuario(Usuario usuario) {
-//		
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		
-//		String senhaEncoder = encoder.encode(usuario.getSenha());
-//		usuario.setSenha(senhaEncoder);
-//		
-//		return usuarioRepository.save(usuario);
-//		
-//	}
-	
 	
 	//cadastrando usuario
 	public Optional<Usuario> cadastrarUsuario(Usuario  usuario){
