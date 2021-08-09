@@ -1,9 +1,7 @@
-use db_mandala;
+use db_lojagame;
 
-select * from tb_tema;
+select * from tb_usuario_ljgame;
 
-insert into tb_tema(descricao, imagem, palavra_chave, titulo)
-values("post um do projeto", "logo do projeto", "nascendo spring", "projeto impregador 1");
 
 /*
 insert into tb_postagens(data, texto,titulo)
