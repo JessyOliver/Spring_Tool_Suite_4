@@ -3,13 +3,17 @@ package br.com.minhalojadegame.service;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Optionals;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.minhalojadegame.model.Usuario;
@@ -25,6 +29,7 @@ public class UsuarioService {
 	//cadastrar usuario
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario){
 		
+			//verificando se o usuário já está cadastrado
 			if(usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) 
 				
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe.", null);
@@ -44,25 +49,46 @@ public class UsuarioService {
 			
 	}
 	
+
 	
 	//metodo para atualizar cadastro do usuario
-	public Optional<Usuario> atualizarUsuario(Usuario usuario){
-		
+	public Optional<Usuario> atualizarUsuario( Usuario usuario){
+
+		//verificando se o id existe no banco
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 			
-			int idade = Period.between(usuario.getDataNascimento(), LocalDate.now()).getYears();
+			//verificando se o usuário já está cadastrado
+			if((usuario.getId() == usuario.getId()) && usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
+				
+				throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já registrado no banco.", null);
+			//	
+						
+			}
+			else
+			{
+					/////ja estava não mexe
+					//recebendo a data de nascimento 
+					int idade = Period.between(usuario.getDataNascimento(), LocalDate.now()).getYears();
+					
+					//verificando se o usuário está logado
+					if (idade < 18) {
+						
+						throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos.", null);
+						
+					}
+					else {
+						
+						//criptografando a senha
+						BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+						
+						String senhaesconder = encoder.encode(usuario.getSenha());
+						usuario.setSenha(senhaesconder);
+										
+						return Optional.of(usuarioRepository.save(usuario));
+						/////ja estava não mexe 
+					}	
+			}
 			
-			if (idade < 18) 
-				
-				throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos.", null);
-				
-				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-				
-				String senhaesconder = encoder.encode(usuario.getSenha());
-				usuario.setSenha(senhaesconder);
-				
-				return Optional.of(usuarioRepository.save(usuario));
-
 		} else {
 			
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!", null);
@@ -96,8 +122,7 @@ public class UsuarioService {
 				usuarioLogin.get().setSenha(usuario.get().getSenha());
 				usuarioLogin.get().setToken(authHeader);				
 
-				return usuarioLogin;
-			
+				return usuarioLogin;	
 		
 			}
 				
@@ -106,8 +131,6 @@ public class UsuarioService {
 				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuário ou senha inválidos!", null);
 
 	}
-	
-	
 	
 	
 }
