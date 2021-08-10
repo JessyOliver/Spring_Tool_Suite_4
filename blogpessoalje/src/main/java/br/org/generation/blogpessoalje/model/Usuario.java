@@ -47,8 +47,7 @@ public class Usuario {
 
 	@Column(name = "dt_nascimento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataNascimento;
-	
+    private LocalDate dataNascimento;	
 	
 	// relacionamento com a tabela postagem
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)//só irá afetar a postagem caso de remover o usuario

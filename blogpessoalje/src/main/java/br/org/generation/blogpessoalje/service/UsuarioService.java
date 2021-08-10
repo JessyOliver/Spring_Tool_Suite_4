@@ -56,13 +56,27 @@ public class UsuarioService {
 		
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 			
-			// Calcular a idade (em anos) através do método between, da Classe Period
+			Optional<Usuario> usuarioCad = usuarioRepository.findByUsuario(usuario.getUsuario());
+			
+			//verificando se usuario já tem o email de alteração cadastrado por outro usuário
+			if (usuarioCad.isPresent() && (usuarioCad.get().getId() != usuario.getId())) {
+				
+				throw new ResponseStatusException(
+						HttpStatus.BAD_REQUEST, "E-mail do usuário já cadastrado!", null);
+				
+			} else {
+
+				
+				// Calcular a idade (em anos) através do método between, da Classe Period
 				int idade = Period.between(usuario.getDataNascimento(), LocalDate.now()).getYears();
 					
 				//verificando se o usuário é maior de idade
-				if (idade < 18)
+				if (idade < 18) {
+					
 					throw new ResponseStatusException(
-						HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos", null);
+							HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos", null);
+				}
+				else {	
 
 						BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 				
@@ -70,7 +84,10 @@ public class UsuarioService {
 						usuario.setSenha(senhaEncoder);
 				
 						return Optional.of(usuarioRepository.save(usuario));
-	
+				}
+				
+			}
+			
 		} else {
 			
 			//Lanço uma Exception do tipo Response Status Not Found
@@ -81,6 +98,7 @@ public class UsuarioService {
 		}
 		
 	}
+	
 	
 	//realizando o login do usuário
 	public Optional<UsuarioLogin> logarUsuario(Optional<UsuarioLogin> usuarioLogin){
