@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,7 +26,7 @@ public class UsuarioService {
 	
 	
 	//cadastrando usuario
-	public Optional<Usuario> cadastrarUsuario(Usuario  usuario){
+	public Usuario cadastrarUsuario(Usuario  usuario){
 		
 		//Lanço uma Exception do tipo Response Status Bad Request
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) 
@@ -46,8 +47,9 @@ public class UsuarioService {
 					String senhaEncoder = encoder.encode(usuario.getSenha());
 					usuario.setSenha(senhaEncoder);
 			
-					return Optional.of(usuarioRepository.save(usuario));
-			
+						//return ResponseEntity.of(usuarioRepository.save(usuario));
+					return usuarioRepository.save(usuario);
+
 	}
 	
 	

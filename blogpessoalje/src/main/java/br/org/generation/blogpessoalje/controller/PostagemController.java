@@ -61,6 +61,7 @@ public class PostagemController {
 		
 	}
 	*/
+
 	
 	
 	//metodo de conexão com a class PostagemRepository

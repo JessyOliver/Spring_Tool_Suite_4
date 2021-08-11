@@ -16,11 +16,23 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	private @Autowired UserDetailsServiceImpl service;
 	
 	//realizando altenticação
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//		
+//		auth.userDetailsService(service);
+//	}
+	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		
-		auth.userDetailsService(service);
+	protected void configure(AuthenticationManagerBuilder auth)
+	throws Exception {
+	auth.userDetailsService(service);
+	auth.inMemoryAuthentication()
+	.withUser("root")
+	.password(passwordEncoder().encode("@1aB8#!T4"))
+	.authorities("ROLE_USER");
 	}
+
+	
 	
 	//retornando senha criptografada
 	@Bean
