@@ -53,52 +53,51 @@ public class UsuarioService {
 	
 	//metodo para atualizar cadastro do usuario
 	public Optional<Usuario> atualizarUsuario( Usuario usuario){
-
+		
 		//verificando se o id existe no banco
-		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
-			
-			//verificando se o usuário já está cadastrado
-			if((usuario.getId() == usuario.getId()) && usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
-				
-				throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já registrado no banco.", null);
-			//	
+				if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 						
-			}
-			else
-			{
-					/////ja estava não mexe
-					//recebendo a data de nascimento 
-					int idade = Period.between(usuario.getDataNascimento(), LocalDate.now()).getYears();
+					Optional<Usuario> usuarioCad = usuarioRepository.findByUsuario(usuario.getUsuario());
 					
-					//verificando se o usuário está logado
-					if (idade < 18) {
+					//verificando se usuario já tem o email de alteração cadastrado por outro usuário
+					if (usuarioCad.isPresent() && (usuarioCad.get().getId() != usuario.getId())) {
 						
-						throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos.", null);
-						
+						throw new ResponseStatusException(
+								HttpStatus.BAD_REQUEST, "E-mail do usuário já cadastrado!", null);
 					}
-					else {
-						
-						//criptografando a senha
-						BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-						
-						String senhaesconder = encoder.encode(usuario.getSenha());
-						usuario.setSenha(senhaesconder);
-										
-						return Optional.of(usuarioRepository.save(usuario));
-						/////ja estava não mexe 
-					}	
-			}
-			
-		} else {
-			
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!", null);
+					else
+					{					/////ja estava não mexe
+							//recebendo a data de nascimento 
+							int idade = Period.between(usuario.getDataNascimento(), LocalDate.now()).getYears();
+							
+							//verificando se o usuário está logado
+							if (idade < 18) {
+								
+								throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário menor de 18 anos.", null);
+								
+							}
+							else {
+								
+								//criptografando a senha
+								BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+								
+								String senhaesconder = encoder.encode(usuario.getSenha());
+								usuario.setSenha(senhaesconder);
+												
+								return Optional.of(usuarioRepository.save(usuario));
+								/////ja estava não mexe 
+							}	
+					}
+					
+				}else {
+					
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!", null);
 
-		}
-		
-		
+				}
+	
 	}
-	
-	
+
+		
 	
 	//realizando o login do usuario
 	public Optional<UsuarioLogin> logarUsuario(Optional<UsuarioLogin> usuarioLogin){

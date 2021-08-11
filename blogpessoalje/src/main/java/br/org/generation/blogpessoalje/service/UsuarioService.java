@@ -47,7 +47,7 @@ public class UsuarioService {
 					String senhaEncoder = encoder.encode(usuario.getSenha());
 					usuario.setSenha(senhaEncoder);
 			
-						//return ResponseEntity.of(usuarioRepository.save(usuario));
+						//return Optional.of(usuarioRepository.save(usuario));
 					return usuarioRepository.save(usuario);
 
 	}

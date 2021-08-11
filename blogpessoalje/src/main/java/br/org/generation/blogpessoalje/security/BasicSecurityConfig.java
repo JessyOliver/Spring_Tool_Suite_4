@@ -25,11 +25,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 	throws Exception {
-	auth.userDetailsService(service);
-	auth.inMemoryAuthentication()
-	.withUser("root")
-	.password(passwordEncoder().encode("@1aB8#!T4"))
-	.authorities("ROLE_USER");
+		auth.userDetailsService(service);
+		auth.inMemoryAuthentication()
+		.withUser("root")
+		.password(passwordEncoder().encode("root"))
+		.authorities("ROLE_USER");
 	}
 
 	
