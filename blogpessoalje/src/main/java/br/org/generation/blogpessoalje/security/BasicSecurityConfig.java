@@ -46,7 +46,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			http.authorizeRequests()
 			.antMatchers("/usuario/cadastrar").permitAll()
-			.antMatchers("/usuario/logar").permitAll()
+			.antMatchers("/usuario/login").permitAll()
 	 		.anyRequest().authenticated()
 	 		.and().httpBasic()
 	 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -70,12 +70,7 @@ public class UsuarioController {
 		
 	}
 	
-	//metodo de logar
-	@PostMapping("/login")
-	public ResponseEntity<UsuarioLogin> autenticationUsuario(@RequestBody Optional<UsuarioLogin> usuario) {
-		return usuarioService.logarUsuario(usuario).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-	} 
+	
 				
 	@PutMapping("/alterar")
 	public ResponseEntity<Usuario> putUsuario(@RequestBody Usuario usuario){
@@ -88,7 +83,17 @@ public class UsuarioController {
 		}
 	}
 	
+	//metodo de logar
+		@PostMapping("/login")
+		public ResponseEntity<UsuarioLogin> autenticationUsuario(@RequestBody Optional<UsuarioLogin> usuario) {
+			return usuarioService.logarUsuario(usuario).map(resp -> ResponseEntity.ok(resp))
+					.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+		} 
 	
+}
+
+
+
 	//criando uma postagem
 //	@PostMapping
 //	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario){
@@ -113,4 +118,4 @@ public class UsuarioController {
 //		
 //	}
 	
-}
+
