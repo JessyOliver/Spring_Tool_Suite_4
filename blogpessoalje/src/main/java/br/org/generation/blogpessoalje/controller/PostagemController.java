@@ -109,7 +109,7 @@ public class PostagemController {
 	//alterar postagem
 	//se não mandar um id ele cria um novo id 
 	@PutMapping
-	public ResponseEntity<Postagem> putPostagem (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> putPostagem(@RequestBody Postagem postagem){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem));
 	}

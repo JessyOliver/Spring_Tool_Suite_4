@@ -50,7 +50,7 @@ public class Postagem {
 	
 	
 	
-	private int curtidas;
+//	private int curtidas;
 	
 	/*métodos gets e sets*/
 
@@ -105,12 +105,12 @@ public class Postagem {
 	}
 	
 	
-	public int getCurtidas() {
-		return curtidas;
-	}
-
-	public void setCurtidas(int curtidas) {
-		this.curtidas = curtidas;
-	}
-	
+//	public int getCurtidas() {
+//		return curtidas;
+//	}
+//
+//	public void setCurtidas(int curtidas) {
+//		this.curtidas = curtidas;
+//	}
+//	
 }
