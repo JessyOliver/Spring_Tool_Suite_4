@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.generation.blogpessoalje.model.Tema;
 import br.org.generation.blogpessoalje.repository.TemaRepository;
+import br.org.generation.blogpessoalje.service.TemaService;
 
 @RestController
 @RequestMapping("/tema")
@@ -26,6 +27,10 @@ public class TemaController {
 	//metodo de conecxão com a class TemaRepository
 	@Autowired
 	private TemaRepository temaRepository;
+	
+	
+	@Autowired
+	private TemaService temaService;
 	
 	//buscando e exibindo os valores salvos no BD
 	@GetMapping
@@ -75,7 +80,12 @@ public class TemaController {
 	
 	
 	
+	@GetMapping("/trendtopics")
+	public ResponseEntity<List<Tema>> getTrendTopics() {
+		
+		return ResponseEntity.ok(temaService.trendTopics());
 	
+	}
 	
 	
 	

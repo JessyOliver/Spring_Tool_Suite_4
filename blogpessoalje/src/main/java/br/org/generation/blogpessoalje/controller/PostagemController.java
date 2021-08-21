@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.org.generation.blogpessoalje.model.Postagem;
 import br.org.generation.blogpessoalje.repository.PostagemRepository;
+import br.org.generation.blogpessoalje.service.PostagemService;
 
 @RestController
 @RequestMapping("/postagens")//@RequestMapping(value="/postagens" , method = RequestMethod.GET)
@@ -68,6 +69,8 @@ public class PostagemController {
 		@Autowired
 		private PostagemRepository postagemRepository;
 		
+		@Autowired
+		private PostagemService postagemService;
 				
 		
 		//buscando e exibindo os valores que foram salvos no banco
@@ -122,7 +125,19 @@ public class PostagemController {
 		
 	}
 	
+	@PutMapping("/curtir/{id}")
+	public ResponseEntity<Postagem> putCurtirPostagemId (@PathVariable Long id){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(postagemService.curtir(id));
 	
+	}
+
+	@PutMapping("/descurtir/{id}")
+	public ResponseEntity<Postagem> putDescurtirPostagemId (@PathVariable Long id){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(postagemService.descurtir(id));
+	
+	}
 	
 	
 	

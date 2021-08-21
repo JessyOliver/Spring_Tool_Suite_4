@@ -38,6 +38,9 @@ public class Postagem {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
+	
+	private int curtidas;
+	
 	//chave estrangeira de tema
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
@@ -49,13 +52,7 @@ public class Postagem {
 	private Usuario usuario;
 	
 	
-	
-//	private int curtidas;
-	
 	/*métodos gets e sets*/
-
-	
-
 	public long getId() {
 		return id;
 	}
@@ -105,12 +102,12 @@ public class Postagem {
 	}
 	
 	
-//	public int getCurtidas() {
-//		return curtidas;
-//	}
-//
-//	public void setCurtidas(int curtidas) {
-//		this.curtidas = curtidas;
-//	}
+	public int getCurtidas() {
+		return curtidas;
+	}
+
+	public void setCurtidas(int curtidas) {
+		this.curtidas = curtidas;
+	}
 //	
 }
