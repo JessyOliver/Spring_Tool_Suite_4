@@ -6,7 +6,11 @@ public class UsuarioLogin {
 	private long id;
 	
 	private String nome;
-
+	
+	private String imagem_perfil;
+	
+	private String tipo;
+	
 	private String usuario;
 
 	private String senha;
@@ -53,11 +57,24 @@ public class UsuarioLogin {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
-	
-	
 
+	public String getImagem_perfil() {
+		return imagem_perfil;
+	}
+
+	public void setImagem_perfil(String imagem_perfil) {
+		this.imagem_perfil = imagem_perfil;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	
 	
 	
 }

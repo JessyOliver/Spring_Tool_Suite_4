@@ -33,6 +33,10 @@ public class Usuario {
 	@Size(min = 2, max = 255, message = "O campo nome deve conter no minimo 10 e no maximo 255 caracteres.")
 	private String nome;
 	
+	private String imagem_perfil;
+	
+	private String tipo;
+	
 	@NotNull(message = "O campo e-mail é obrigatório.")
 	@ApiModelProperty(example = "email@email.com.br")
 	@Email
@@ -119,6 +123,22 @@ public class Usuario {
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getImagem_perfil() {
+		return imagem_perfil;
+	}
+
+	public void setImagem_perfil(String imagem_perfil) {
+		this.imagem_perfil = imagem_perfil;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	
